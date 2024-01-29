@@ -1,0 +1,14 @@
+<div class="header-right-area" *ngIf="pageTitle">
+  <div class="row">
+    <div class="col-md-12 col-lg-8">
+      <div class="section_title">
+        <h2>{{ pageTitle }}</h2>
+      </div>
+    </div>
+
+    <div class="col-md-12 header-search-bar col-lg-4 text-end" *ngIf="userName">
+      Welcome {{ userName }}
+    </div>
+  </div>
+</div>
+<alert></alert>

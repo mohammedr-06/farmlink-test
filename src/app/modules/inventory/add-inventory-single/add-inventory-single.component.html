@@ -1,0 +1,350 @@
+<div class="main-body w-100">
+  <app-header titleName="Add Inventory"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar">
+            <h1>Add Inventory</h1>
+          </div>
+          <div class="kbs_form-body">
+            <form [formGroup]="inventoryForm">
+              <div class="row">
+                <div class="col-md-4 add-inventory ms-5 me-5">
+                  <div class="form-group float-start col-md-10">
+                    <label class="form-label f-14"
+                      >Category<span class="red">*</span></label
+                    >
+                    <select
+                      class="form-select"
+                      formControlName="category"
+                      (change)="getSelectedOptionText($event)"
+                    >
+                      <option
+                        *ngFor="let catdata of categoryOption"
+                        [value]="catdata.id"
+                      >
+                        {{ catdata.categoryName }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="
+                        inventoryForm.controls['category'].invalid &&
+                        (inventoryForm.controls['category'].dirty ||
+                          inventoryForm.controls['category'].touched)
+                      "
+                      class="error mt-2"
+                    >
+                      <div
+                        *ngIf="
+                          inventoryForm.controls['category'].errors['required']
+                        "
+                      >
+                        Category is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="requestcls"
+                    (click)="openCategoryModel(requestTemplate, 'category')"
+                  >
+                    + Add Your Own
+                  </div>
+                </div>
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14"
+                      >Item Name<span class="red">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="itemName"
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      inventoryForm.controls['itemName'].invalid &&
+                      (inventoryForm.controls['itemName'].dirty ||
+                        inventoryForm.controls['itemName'].touched)
+                    "
+                    class="error mt-2"
+                  >
+                    <div
+                      *ngIf="
+                        inventoryForm.controls['itemName'].errors['required']
+                      "
+                    >
+                      Item Name is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group float-start col-md-10">
+                    <label class="form-label f-14"
+                      >Unit<span class="red">*</span></label
+                    >
+                    <select class="form-select" formControlName="unit">
+                      <option
+                        *ngFor="let unitdata of unitOption"
+                        [value]="unitdata.id"
+                      >
+                        {{ unitdata.unitName }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="
+                        inventoryForm.controls['unit'].invalid &&
+                        (inventoryForm.controls['unit'].dirty ||
+                          inventoryForm.controls['unit'].touched)
+                      "
+                      class="error mt-2"
+                    >
+                      <div
+                        *ngIf="
+                          inventoryForm.controls['unit'].errors['required']
+                        "
+                      >
+                        Unit is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="requestcls"
+                    (click)="openCategoryModel(requestTemplate, 'unit')"
+                  >
+                    + Add Your Own
+                  </div>
+                </div>
+
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14"
+                      >Unit Value (price per unit)<span class="red"
+                        >*</span
+                      ></label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="unitValue"
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        inventoryForm.controls['unitValue'].invalid &&
+                        (inventoryForm.controls['unitValue'].dirty ||
+                          inventoryForm.controls['unitValue'].touched)
+                      "
+                      class="error mt-2"
+                    >
+                      <div
+                        *ngIf="
+                          inventoryForm.controls['unitValue'].errors['required']
+                        "
+                      >
+                        Unit value is required.
+                      </div>
+                    </div>
+                    <div
+                      class="error mt-2"
+                      *ngIf="
+                        inventoryForm.controls['unitValue'].hasError('min')
+                      "
+                    >
+                      Unit Value must be greater than or equal to 0.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14"
+                      >Quantity<span class="red">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="qty"
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      inventoryForm.controls['qty'].invalid &&
+                      (inventoryForm.controls['qty'].dirty ||
+                        inventoryForm.controls['qty'].touched)
+                    "
+                    class="error mt-2"
+                  >
+                    <div
+                      *ngIf="inventoryForm.controls['qty'].errors['required']"
+                    >
+                      Quantity is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14">Track By Inventory</label>
+                    <input type="checkbox" formControlName="trackInventory" />
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14">Description</label>
+                    <textarea
+                      formControlName="desc"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14">Price</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="price"
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        inventoryForm.controls['price'].invalid &&
+                        (inventoryForm.controls['price'].dirty ||
+                          inventoryForm.controls['price'].touched)
+                      "
+                      class="error mt-2"
+                    >
+                      <div
+                        *ngIf="
+                          inventoryForm.controls['price'].errors['required']
+                        "
+                      >
+                        Price is required.
+                      </div>
+                      <div
+                        class="error mt-2"
+                        *ngIf="inventoryForm.controls['price'].hasError('min')"
+                      >
+                        Price must be greater than or equal to 0.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-4 ms-5 me-5 add-inventory">
+                  <div class="form-group">
+                    <label class="form-label f-14">Image</label>
+                    <input
+                      (change)="onFilechange($event)"
+                      class="form-control w-200"
+                      type="file"
+                      accept="image/*"
+                      formControlName="fileInput"
+                    />
+                    <div class="error f-12 mt-2">
+                      {{ imageError }}
+                    </div>
+                    <div
+                      class="file-upload mt-2"
+                      *ngIf="previewImage && previewImage !== null"
+                    >
+                      <img [src]="previewImage" width="125" height="125" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3 ms-5 me-5 add-inventory">
+                <div class="col-md-11 col-btn text-end">
+                  <button
+                    class="submit-btn border-0 col-md-3"
+                    (click)="cancelClick()"
+                  >
+                    Cancel
+                  </button>
+                  &nbsp;&nbsp;
+                  <button
+                    class="submit-btn border-0 col-md-3"
+                    (click)="SaveData(inventoryForm)"
+                    [disabled]="!inventoryForm.valid"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #requestTemplate>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new"> Send request to Admin </span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="requestForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label
+            class="col-form-label"
+            *ngIf="requestForm.controls['categoryType'].value === 'unit'"
+            >Enter New Unit Name</label
+          >
+          <label
+            class="col-form-label"
+            *ngIf="requestForm.controls['categoryType'].value === 'category'"
+            >Enter New Category Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            [formControlName]="
+              requestForm.controls['categoryType'].value === 'unit'
+                ? 'unitName'
+                : 'categoryName'
+            "
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="requestSubmit(requestForm.value)"
+          [disabled]="!requestForm.valid"
+        >
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

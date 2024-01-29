@@ -1,0 +1,228 @@
+<div class="main-body w-100" >
+    <app-header titleName="Manage Inventory"></app-header>
+    <div class="section-details">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col">
+                <div class="tab-data order-section">
+                    <!-- List group -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#livestock">Livestock</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#dairy">Dairy</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#produce">Produce</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#other-items">Other</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="livestock" role="tabpanel">
+                            <div class="top-infos d-sm-flex justify-content-between">
+                                <div class="col form-group">
+                                    <a (click)="addService()" class="btn"><i class="bi bi-plus-lg"></i>Add Item</a>
+                                </div>
+                                <div class="col form-group header-search-bar">
+                                    <form class="form-inline my-lg-0">
+                                        <i class="bi bi-search"></i><input class="form-control" type="search" placeholder="Search Inventory" aria-label="Search Inventory" />
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="table-responsive" >
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="2%"></th>
+                                            <th scope="col" width="16%">Item Name</th>
+                                            <th scope="col" width="16%">Unit Value</th>
+                                            <th scope="col" width="24%">Unit</th>
+                                            <th scope="col" width="16%">In Stock</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of itemInventory">
+                                            <tr>
+                                                <td></td>
+                                                <td>{{item.name}}</td>
+                                                <td>
+                                                    <input type="text" value="{{item.unitValue}}" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <select name="unitName" class="form-select">
+                                                        <option
+                                                        *ngFor="let unitdata of unitOption"
+                                                        [value]="unitdata"
+                                                      >{{ unitdata }}</option>
+                                                    </select>
+                                                </td>
+                                                
+                                                <td><div class="quantity-box d-flex justify-content-between">
+                                                    <span class="minus" (click)="item.value = minusClick(item.value)">-</span>
+                                                    {{item.value}}
+                                                    <span class="plus" (click)="item.value = plusClick(item.value)">+</span>
+                                                </div></td>
+                                                <td><a href="#" class="danger font-weight-bold">Delete</a></td>
+                                            </tr>
+                                        </ng-container>
+                                            <tr *ngIf="itemInventory">
+                                                <td colspan="6" class="col col-btn text-end">
+                                                    <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Cancel</button> &nbsp;&nbsp;
+                                                    <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Submit</button>
+                                                </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="dairy" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="2%"></th>
+                                            <th scope="col" width="16%">Item Name</th>                                            
+                                            <th scope="col" width="16%">Unit Value</th>
+                                            <th scope="col" width="24%">Unit</th>
+                                            <th scope="col" width="16%">In Stock</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of dairyItem">
+                                            <tr>
+                                                <td></td>
+                                                <td>{{item.name}}</td>
+                                                <td>
+                                                    <input type="text" value="{{item.unitValue}}" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <select name="unitName" class="form-select">
+                                                        <option
+                                                        *ngFor="let unitdata of unitOption"
+                                                        [value]="unitdata"
+                                                      >{{ unitdata }}</option>
+                                                    </select>
+                                                </td>
+                                               
+                                                <td>
+                                                    <div class="quantity-box d-flex justify-content-between">
+                                                        <span class="minus" (click)="item.value = minusClick(item.value)">-</span>
+                                                        {{item.value}}
+                                                        <span class="plus" (click)="item.value = plusClick(item.value)">+</span>
+                                                    </div>
+                                                </td>
+                                                <td><a href="#" class="danger font-weight-bold">Delete</a></td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr *ngIf="dairyItem">
+                                            <td colspan="6" class="col col-btn text-end">
+                                                <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Cancel</button> &nbsp;&nbsp;
+                                                <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Submit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="produce" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="2%"></th>
+                                            <th scope="col" width="16%">Item Name</th>
+                                            <th scope="col" width="16%">Unit Value</th>
+                                            <th scope="col" width="24%">Unit</th>
+                                            <th scope="col" width="16%">In Stock</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of produceItem">
+                                            <tr>
+                                                <td></td>
+                                                <td>{{item.name}}</td>
+                                                <td>
+                                                    <input type="text" value="{{item.unitValue}}" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <select name="unitName" class="form-select">
+                                                        <option
+                                                        *ngFor="let unitdata of unitOption"
+                                                        [value]="unitdata"
+                                                      >{{ unitdata }}</option>
+                                                    </select>
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="quantity-box d-flex justify-content-between">
+                                                        <span class="minus" (click)="item.value = minusClick(item.value)">-</span>
+                                                        {{item.value}}
+                                                        <span class="plus" (click)="item.value = plusClick(item.value)">+</span>
+                                                    </div>
+                                                </td>
+                                                <td><a href="#" class="danger font-weight-bold">Delete</a></td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr *ngIf="produceItem">
+                                            <td colspan="6" class="col col-btn text-end">
+                                                <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Cancel</button> &nbsp;&nbsp;
+                                                <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Submit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="other-items" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="2%"></th>
+                                            <th scope="col" width="16%">Item Name</th>
+                                            <th scope="col" width="16%">Unit Value</th>
+                                            <th scope="col" width="24%">Unit</th>
+                                            <th scope="col" width="16%">In Stock</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of otherItem">
+                                            <tr>
+                                                <td></td>
+                                                <td>{{item.name}}</td>
+                                                <td>
+                                                    <input type="text" value="{{item.unitValue}}" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <select name="unitName" class="form-select">
+                                                        <option
+                                                        *ngFor="let unitdata of unitOption"
+                                                        [value]="unitdata"
+                                                      >{{ unitdata }}</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="quantity-box d-flex justify-content-between">
+                                                        <span class="minus" (click)="item.value = minusClick(item.value)">-</span>
+                                                        {{item.value}}
+                                                        <span class="plus" (click)="item.value = plusClick(item.value)">+</span>
+                                                    </div>
+                                                </td>
+                                                <td><a href="#" class="danger font-weight-bold">Delete</a></td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr *ngIf="otherItem">
+                                            <td colspan="6" class="col col-btn text-end">
+                                                <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Cancel</button> &nbsp;&nbsp;
+                                                <button class="submit-btn border-0 col-md-3 f-14 " (click)="false">Submit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

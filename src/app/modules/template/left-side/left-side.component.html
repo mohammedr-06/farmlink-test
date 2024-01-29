@@ -1,0 +1,171 @@
+<div class="leftbar-toolbar">
+  <div class="logo-small">
+    <img src="../../../../assets/images/logo.png" class="img-fluid" />
+  </div>
+  <nav
+    class="custom-menu navbar navbar-expand-lg navbar-light bg-light align-top"
+  >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto mtop-3">
+        <li class="nav-item icon dashboard">
+          <i class="bi bi-house-door-fill"></i
+          ><a routerLink="/dashboard/farmer">Dashboard</a>
+        </li>
+        <li class="nav-item icon manageinventory">
+          <i class="bi bi-box-fill"></i
+          ><a routerLink="/manage/inventory-list">Manage Inventory</a>
+        </li>
+        <li class="nav-item icon manageinventory">
+          <i class="bi bi-archive-fill"></i
+          ><a routerLink="/manage/archive-list">Archive List</a>
+        </li>
+        <li class="nav-item icon manageinventory">
+          <i class="bi bi-view-list"></i
+          ><a routerLink="/request/send-request-list">Request List</a>
+        </li>
+        <!--<li class="nav-item icon manageinventory"><i class="bi bi-unity"></i><a routerLink="/manage/unit-list">Unit Management</a></li> -->
+        <li class="nav-item icon manageorders">
+          <i class="bi bi-bag-fill"></i
+          ><a routerLink="/order/list">Manage Orders</a>
+        </li>
+        <li class="nav-item icon chat">
+          <i class="bi bi-chat-left-dots-fill"></i
+          ><a routerLink="/chat">Chats</a>
+        </li>
+        <li class="nav-item icon profile">
+          <i class="bi bi-person-fill"></i
+          ><a routerLink="/user/profile">Profile</a>
+        </li>
+        <li class="nav-item icon profile">
+          <i class="bi bi-info-lg"></i
+          ><a
+            style="cursor: pointer"
+            (click)="openCategoryModel(requestTemplate)"
+            >Support</a
+          >
+        </li>
+        <li class="nav-item icon logout">
+          <i class="bi bi-box-arrow-right"></i
+          ><a routerLink="/user/logout">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <ng-template #requestTemplate>
+    <div style="width: 900px" class="main-body w-100 custom-width">
+      <!-- <app-header titleName="Welcome - Farmlink Visit"></app-header> -->
+      <div class="section-details">
+        <div class="row">
+          <div class="col-md-12 col-lg-12 col">
+            <div class="whitebox sales-overview">
+              <div class="">
+                <h3>How can we help?</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="requestForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">First Name</label>
+          <input type="text" class="form-control" formControlName="firstName" />
+          <div
+            *ngIf="
+              requestForm.controls['firstName'].hasError('required') &&
+              requestForm.controls['firstName'].touched
+            "
+            class="text-danger"
+          >
+            First Name is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Last Name</label>
+          <input type="text" class="form-control" formControlName="lastName" />
+          <div
+            *ngIf="
+              requestForm.controls['lastName'].hasError('required') &&
+              requestForm.controls['lastName'].touched
+            "
+            class="text-danger"
+          >
+            Last Name is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label"> Contact Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="contactNumber"
+            (input)="formatPhoneNumber($event)"
+            maxlength="14"
+            placeholder="(111) 000-0000"
+          />
+
+          <div
+            *ngIf="
+              requestForm.controls['contactNumber'].hasError('required') &&
+              requestForm.controls['contactNumber'].touched
+            "
+            class="text-danger"
+          >
+            Contact Number is required.
+          </div>
+          <!-- <div
+            *ngIf="requestForm.controls['contactNumber'].hasError('minlength')"
+          >
+            Contact Number must have at least 10 digits.
+          </div> -->
+          <!-- <div
+            *ngIf="requestForm.controls['contactNumber'].hasError('maxlength')"
+          >
+            Contact Number must have at most 10 digits.
+          </div> -->
+        </div>
+
+        <div class="form-group">
+          <label for="floatingTextarea2">What is your concern</label>
+          <textarea
+            class="form-control"
+            placeholder="Description"
+            id="floatingTextarea2"
+            style="height: 100px"
+            formControlName="concern"
+          ></textarea>
+          <div
+            *ngIf="
+              requestForm.controls['concern'].hasError('required') &&
+              requestForm.controls['concern'].touched
+            "
+            class="text-danger"
+          >
+            Concern is required.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="requestSubmit(requestForm.value)"
+          [disabled]="requestForm.invalid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>

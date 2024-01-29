@@ -1,0 +1,104 @@
+<div class="main-body w-100" >
+    <app-header titleName="Order Detail"></app-header>
+    <div class="section-details">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col">
+                <div class="tab-data order-section">
+                    <!-- List group -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#detail">Detail</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#chat">Chat History</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="detail" role="tabpanel">
+                            <div class="col-md-11" style="margin:0 auto">
+                                <div class="row">
+                                    <div class="col-md-11 border-bottom mt-3 mb-3">
+                                        <span class="heading">Order Details</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 mb-3">Order No:</div>
+                                    <div class="col-md-4 mb-3">{{orderData?.orderNumber}}</div>
+                                    <div class="col-md-2 mb-3">Order Date:</div>
+                                    <div class="col-md-3 mb-3">{{orderData?.orderDate | date: 'dd/MM/yyyy'}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">Amount:</div>
+                                    <div class="col-md-4">{{orderData?.totalAmount | currency}}</div>
+                                    <div class="col-md-2">Status:</div>
+                                    <div class="col-md-4">{{orderData?.status}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11 border-bottom  mt-3 mb-3">
+                                        <span class="heading">Customer Details</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 mb-3">Name:</div>
+                                    <div class="col-md-4 mb-3 breakword">{{orderData?.customerName}}</div>
+                                    <div class="col-md-2 mb-3 mb-3">Phone:</div>
+                                    <div class="col-md-4 mb-3 mb-3">{{orderData?.mobileNumber}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 mb-3">Email:</div>
+                                    <div class="col-md-10 mb-3 breakword">{{orderData?.email}}</div>                                   
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 mb-3 mb-3">Address:</div>
+                                    <div class="col-md-10 mb-3 mb-3 breakword">
+                                        <div class="col-md-12">{{orderData?.address?.address}}</div>
+                                        <div class="col-md-12">{{orderData?.address?.country}}, {{orderData?.address?.state}},{{orderData?.address?.city}}</div>
+                                    </div>
+                                </div>                                
+                                <div class="row">
+                                    <div class="col-md-11 border-bottom  mt-3 mb-3">
+                                        <span class="heading">Detail of Item(s)</span>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <table class="table table-c">
+                                            <thead>
+                                              <tr>
+                                                <th>Item Name</th>
+                                                <th>Qty</th>
+                                                <th>Price($)</th>
+                                                <th>Amount($)</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor=" let item of orderData?.orderedItems">
+                                                    <td>{{item.itemName}}</td>
+                                                    <td>{{item.quantity}}</td>
+                                                    <td>{{item.price}}</td>
+                                                    <td>{{item.amount}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="tab-pane" id="chat" role="tabpanel">
+                            <div class="chat-window ms-4 me-4">
+                            <div class="profile-chats" >
+                                <ng-container *ngFor="let data of chatData; let i=index">
+                                    <div class="msg" [ngClass]="userInfo.id === data.receiverId ? 'user-msg' : 'admin-msg'">
+                                        {{data.text}}
+                                    </div>
+                                   <!-- <div>
+                                        <span *ngIf="userInfo.id === data.receiverId" class="small-fn">{{userInfo.contactName}}</span>
+                                    </div>-->
+                                </ng-container>
+                            </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

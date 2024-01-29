@@ -1,0 +1,53 @@
+<div class="main-body w-100">
+    <app-header titleName="Category Management"></app-header>
+    <div class="section-details">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col">
+                <div class="whitebox sales-overview">
+                    <div class="kbs_title-bar">
+                        <h1 *ngIf="!isEdit">Add Category</h1>
+                        <h1 *ngIf="isEdit">Update Category</h1>
+                    </div>
+                    <div class="kbs_form-body ">
+                        <form [formGroup]="categoryForm">
+                            <div class="row mt-3 ms-5 me-5">
+                                <div class="col-md-6">
+                                    <label class="form-label f-14">Category Name </label>
+                                    <input type="text" class="form-control f-14" formControlName="categoryName">
+                                    <div *ngIf="categoryForm.controls['categoryName'].invalid && (categoryForm.controls['categoryName'].dirty || categoryForm.controls['categoryName'].touched)"
+                                        class="error mt-2">
+                                        <div *ngIf="categoryForm.controls['categoryName'].errors['required']">
+                                            Category Name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ms-5 me-5">
+                                <div class="col-md-6">
+                                    <label class="form-label f-14">Status </label>
+                                    <select class="form-select" formControlName="status">
+                                        <option value="">Select</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                    <div *ngIf="categoryForm.controls['status'].invalid && (categoryForm.controls['status'].dirty || categoryForm.controls['status'].touched)"
+                                        class="error mt-2">
+                                        <div *ngIf="categoryForm.controls['status'].errors['required']">
+                                            Status is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ms-5 me-5">
+                                <div class="col-md-8 col-btn">
+                                    <button class="submit-btn border-0 col-md-3" (click)="cancelClick()">Cancel</button> &nbsp;&nbsp;
+                                    <button class="submit-btn border-0 col-md-3" (click)="submitCategoryData(categoryForm)" [disabled]="!categoryForm.valid">Submit</button>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

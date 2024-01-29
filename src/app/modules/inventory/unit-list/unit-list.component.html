@@ -1,0 +1,152 @@
+<div class="main-body w-100">
+  <app-header titleName="Unit Management"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar d-flex justify-content-between">
+            <div>
+              <h1>Unit Management</h1>
+            </div>
+            <div class="">
+              <a
+                (click)="addUnit()"
+                class="btn btn-success m-top-minus f-14 white-color"
+                style="margin-top: -5px !important"
+                ><i class="bi bi-plus-lg white-color"></i>Add Unit</a
+              >
+            </div>
+          </div>
+          <div class="kbs_form-body">
+            <div class="col-md-12 header-search-bar page-search col-lg-6 mb-3">
+              <i class="bi bi-search"></i>
+              <input
+                type="search"
+                aria-label="Search"
+                placeholder="Search UnitName"
+                class="form-control mr-sm-2"
+                [(ngModel)]="filter.unitName"
+              />
+              <!--  <span class="small-txt"><b>Note:</b>Enter search text and click on search icon</span> -->
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'unitName'"
+                    (click)="setOrder('unitName')"
+                  >
+                    Unit Name <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    width="12%"
+                    class="text-center"
+                    [class.active]="order === 'status'"
+                    (click)="setOrder('status')"
+                  >
+                    Status<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th width="22%" class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="!this.isLoading">
+                <tr
+                  *ngFor="
+                    let item of unitData
+                      | paginate : pagingConfig
+                      | filterBy : filter
+                  "
+                >
+                  <td>{{ item.unitName }}</td>
+                  <td class="text-center">
+                    <span
+                      *ngIf="item.status === 'Inactive'"
+                      class="o-status rejected"
+                      >{{ item.status }}</span
+                    >
+                    <span
+                      *ngIf="item.status === 'Active'"
+                      class="o-status completed"
+                      >{{ item.status }}</span
+                    >
+                  </td>
+                  <td class="text-center">
+                    <a (click)="editUnit(item)"
+                      ><i class="bi bi-pencil-fill"></i></a
+                    >&nbsp;&nbsp;
+                    <a (click)="deleteConfirmation(item.id, confirmPopup)"
+                      ><i class="bi bi-trash-fill"></i
+                    ></a>
+                  </td>
+                </tr>
+                <tr *ngIf="(unitData | filterBy : filter).length === 0">
+                  <td colspan="3">
+                    <span class="error">No Record Found!!</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3" *ngIf="this.pagingConfig.totalItems > 0">
+            <div class="col-md-12 text-end">
+              <div class="no-of-row text-end me-2">
+                <label class="control-label no-og-lbl" for="noOfRows"
+                  >No. of Rows</label
+                >
+                <select
+                  name="noOfRows"
+                  (change)="onTableSizeChange($event)"
+                  class="form-select form-select-sm"
+                >
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="pageing">
+                <pagination-controls (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #confirmPopup>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closePopup()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this Unit Record?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="closePopup()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteConfirm(id)"
+        >
+          Confirm
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,282 @@
+<div class="main-body w-100">
+  <app-header titleName="Archive List"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar">
+            <div class="col-lg-12 row">
+              <div class="col-lg-8 col-sm-12 my-2">
+                <h1>Archive List</h1>
+              </div>
+              <div class="col-lg-2 my-2 text-end">
+                <!-- <a
+                  (click)="addInventory()"
+                  class="btn btn-success m-top-minus f-14 white-color"
+                  style="margin-top: -5px !important"
+                  ><i class="bi bi-plus-lg white-color"></i>Add Inventory</a
+                > -->
+              </div>
+              <div class="col-lg-2 my-2 text-end">
+                <!-- <a
+                  (click)="addBulkInventory()"
+                  class="btn btn-success m-top-minus f-14 white-color"
+                  style="margin-top: -5px !important"
+                  ><i class="bi bi-plus-lg white-color"></i>Add Bulk
+                  Inventory</a
+                > -->
+              </div>
+            </div>
+          </div>
+          <div class="kbs_form-body table-responsive">
+            <!--<div class="col-md-12 header-search-bar page-search col-lg-6 mb-3" >
+                        <i  class="bi bi-search" (click)="updateFilters()"></i>
+                        <input  type="search" aria-label="Search" placeholder="Search Inventory" class="form-control mr-sm-2" [(ngModel)]="searchText">
+                        <span class="small-txt"><b>Note:</b>Enter search text and click on search icon</span> 
+                      </div>  -->
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'categoryName'"
+                    (click)="setOrder('categoryName')"
+                  >
+                    Category<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'itemName'"
+                    (click)="setOrder('itemName')"
+                  >
+                    Item Name<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'unitValue'"
+                    (click)="setOrder('unitValue')"
+                  >
+                    Unit Value<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'unit'"
+                    (click)="setOrder('unit')"
+                  >
+                    Unit<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'qty'"
+                    (click)="setOrder('qty')"
+                  >
+                    Qty<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    scope="col"
+                    [class.active]="order === 'price'"
+                    (click)="setOrder('price')"
+                  >
+                    Price<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th scope="col">Action</th>
+                </tr>
+                <tr>
+                  <th scope="col">
+                    <input
+                      type="search"
+                      style="width: 140px"
+                      placeholder="Search "
+                      class="form-control"
+                      [(ngModel)]="userFilter.categoryName"
+                    />
+                  </th>
+                  <th scope="col">
+                    <input
+                      type="search"
+                      style="width: 140px"
+                      placeholder="Search "
+                      class="form-control"
+                      [(ngModel)]="userFilter.itemName"
+                    />
+                  </th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col">
+                    <input
+                      type="search"
+                      style="width: 140px"
+                      placeholder="Search "
+                      class="form-control"
+                      [(ngModel)]="userFilter.qty"
+                    />
+                  </th>
+                  <th scope="col">
+                    <input
+                      type="search"
+                      style="width: 95px"
+                      placeholder="Search"
+                      class="form-control"
+                      [(ngModel)]="userFilter.price"
+                    />
+                  </th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of inventoryData
+                      | paginate : pagingConfig
+                      | filterBy : userFilter
+                  "
+                >
+                  <td>{{ item.categoryName }}</td>
+                  <td>{{ item.itemName }}</td>
+                  <td>{{ item.unitValue }}</td>
+                  <td>{{ item.unit }}</td>
+                  <td>{{ item.qty }}</td>
+                  <td>{{ item.price | currency }}</td>
+                  <td>
+                    <!-- (click)="openInvenModal(item)" -->
+                    <a
+                      ><i
+                        class="bi bi-arrow-counterclockwise"
+                        (click)="openInvenUnArchivedModal(unarchive, item)"
+                      ></i></a
+                    >&nbsp;&nbsp;
+                    <a (click)="openInvenUnArchivedModal(unarchive, item)"
+                      ><i class="bi bi-trash-fill"></i
+                    ></a>
+                    <!-- &nbsp;&nbsp;
+                    <a (click)="openInvenDeleteModal(inventorydelete, item)"
+                      ><i class="bi bi-archive-fill"></i
+                    ></a> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- <div class="col-md-12 text-end">
+              <div class="no-of-row text-end me-2">
+                <label class="control-label no-og-lbl" for="noOfRows"
+                  >No. of Rows</label
+                >
+                <select
+                  name="noOfRows"
+                  (change)="onTableSizeChange($event)"
+                  class="form-select form-select-sm"
+                >
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="pageing">
+                <pagination-controls (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+              <div
+                class="row mt-3"
+                *ngIf="this.pagingConfig.totalItems > 0"
+              ></div>
+            </div> -->
+          </div>
+          <div class="row mt-3" *ngIf="this.pagingConfig.totalItems > 0">
+            <div class="col-md-12 text-end">
+              <div class="no-of-row text-end me-2">
+                <label class="control-label no-og-lbl" for="noOfRows"
+                  >No. of Rows</label
+                >
+                <select
+                  name="noOfRows"
+                  (change)="onTableSizeChange($event)"
+                  class="form-select form-select-sm"
+                >
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="pageing">
+                <pagination-controls (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #inventorydelete>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closePopup()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this Inventory Record?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="closePopup()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteConfirm(deleteInvId)"
+        >
+          Confirm
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #unarchive>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closePopup()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to unarchive this Inventory Record?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="closePopup()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="unArchive(archiveId)"
+        >
+          Confirm
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

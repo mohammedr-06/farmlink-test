@@ -1,0 +1,348 @@
+<h1>Sign Up</h1>
+<h4>Sign Up to Continue</h4>
+<div class="signup-form mtop-3">
+  <form [formGroup]="sigupForm">
+    <div class="row">
+      <div class="col-md-6 field">
+        <input
+          type="text"
+          formControlName="fullName"
+          required
+          placeholder="Full Name*"
+          autocomplete="off"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['fullName'].invalid &&
+            (sigupForm.controls['fullName'].dirty ||
+              sigupForm.controls['fullName'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['fullName'].errors.required">
+            Full Name is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 field">
+        <input
+          type="email"
+          formControlName="email"
+          required
+          placeholder="Email*"
+          autocomplete="off"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['email'].invalid &&
+            (sigupForm.controls['email'].dirty ||
+              sigupForm.controls['email'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['email'].errors.required">
+            Email is required.
+          </div>
+          <div *ngIf="sigupForm.get('email').hasError('pattern')">
+            Email is invalid
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 field">
+        <input
+          [type]="passwordEyeHide ? 'password' : 'text'"
+          placeholder="Password*"
+          formControlName="password"
+          class="mb-1"
+        />
+        <i
+          class="icon2"
+          [ngClass]="passwordEyeHide ? 'bi bi-eye' : 'bi bi-eye-slash'"
+          (click)="myPassword()"
+        ></i>
+
+        <!--<i class="icon" [ngClass]="passwordEyeHide ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="myPassword()"></i> -->
+        <div
+          *ngIf="
+            sigupForm.controls['password'].invalid &&
+            (sigupForm.controls['password'].dirty ||
+              sigupForm.controls['password'].touched)
+          "
+          class="error mt-2"
+        >
+          <div *ngIf="sigupForm.controls['password'].errors.required">
+            Password is required.
+          </div>
+          <div *ngIf="sigupForm.get('password').hasError('pattern')">
+            Password must contain more than 8 characters, 1 upper case letter,
+            and 1 special character
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <app-password-strength
+          [passwordToCheck]="sigupForm.value.password"
+          (passwordStrength)="onPasswordStrengthChanged($event)"
+        ></app-password-strength>
+      </div>
+      <div class="col-md-12 field">
+        <div class="input-icons w-100">
+          <input
+            [type]="passRetEyeHide ? 'password' : 'text'"
+            placeholder="Re-enter Password*"
+            formControlName="confirmpassword"
+          />
+          <i
+            class="icon"
+            [ngClass]="passwordEyeHide ? 'bi bi-eye' : 'bi bi-eye-slash'"
+            (click)="myRetyPassword()"
+          ></i>
+
+          <!-- <i class="icon" [ngClass]="passRetEyeHide ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="myRetyPassword()"></i>-->
+          <div
+            *ngIf="
+              sigupForm.controls['confirmpassword'].invalid &&
+              (sigupForm.controls['confirmpassword'].dirty ||
+                sigupForm.controls['confirmpassword'].touched)
+            "
+            class="error"
+          >
+            <div *ngIf="sigupForm.controls['confirmpassword'].errors.required">
+              Re-enter Password is required.
+            </div>
+            <div *ngIf="sigupForm.controls['confirmpassword'].errors.mustMatch">
+              Password and Confirm password should be same
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="farm-detail row mtop-1">
+      <div class="col-md-12"><h4>Butcher Details</h4></div>
+
+      <div class="col-md-6 field">
+        <input
+          type="text"
+          formControlName="shopName"
+          required
+          placeholder="Shop Name*"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['shopName'].invalid &&
+            (sigupForm.controls['shopName'].dirty ||
+              sigupForm.controls['shopName'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['shopName'].errors.required">
+            Shop Name is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 field">
+        <input
+          type="tel"
+          formControlName="phone"
+          mask="(000) 000-0000"
+          placeholder="(000) 000-0000"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['phone'].invalid &&
+            (sigupForm.controls['phone'].dirty ||
+              sigupForm.controls['phone'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['phone'].errors.required">
+            Phone Number is required.
+          </div>
+          <div *ngIf="sigupForm.controls['phone'].hasError('minlength')">
+            Phone Number must have at least 10 digits.
+          </div>
+          <!-- <div *ngIf="sigupForm.controls['phone'].hasError('maxlength')">
+            Phone Number must have at most 10 digits.
+          </div> -->
+        </div>
+      </div>
+      <div class="col-md-12 field">
+        <input
+          class="form-control"
+          ngx-google-places-autocomplete
+          [options]="options2"
+          (onAddressChange)="handleAddressChange($event)"
+          formControlName="location"
+          placeholder="Start typing your address"
+        />
+      </div>
+      <div class="col-md-12 field">
+        <input
+          type="text"
+          formControlName="streetAddress"
+          required
+          placeholder="Street Address*"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['streetAddress'].invalid &&
+            (sigupForm.controls['streetAddress'].dirty ||
+              sigupForm.controls['streetAddress'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['streetAddress'].errors.required">
+            Street Address is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 field">
+        <input
+          type="text"
+          formControlName="city"
+          required
+          placeholder="City*"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['city'].invalid &&
+            (sigupForm.controls['city'].dirty ||
+              sigupForm.controls['city'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['city'].errors.required">
+            City is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 field">
+        <input
+          type="text"
+          formControlName="state"
+          required
+          placeholder="State*"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['state'].invalid &&
+            (sigupForm.controls['state'].dirty ||
+              sigupForm.controls['state'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['state'].errors.required">
+            State is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 field">
+        <input
+          type="text"
+          formControlName="zipcode"
+          required
+          placeholder="Zip Code*"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['zipcode'].invalid &&
+            (sigupForm.controls['zipcode'].dirty ||
+              sigupForm.controls['zipcode'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['zipcode'].errors.required">
+            Zip Code is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 field">
+        <input
+          type="text"
+          formControlName="country"
+          required
+          placeholder="Country*"
+        />
+        <div
+          *ngIf="
+            sigupForm.controls['country'].invalid &&
+            (sigupForm.controls['country'].dirty ||
+              sigupForm.controls['country'].touched)
+          "
+          class="error"
+        >
+          <div *ngIf="sigupForm.controls['country'].errors.required">
+            Country is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row field">
+          <div class="col-md-3 field">
+            <input type="text" formControlName="latitude"  placeholder="Latitude">
+          </div>
+          <div class="col-md-3 field">
+            <input type="text" formControlName="longitude" required placeholder="Longitude">
+          </div>
+        </div>-->
+
+    <div class="row terms-condition">
+      <div class="col-md-12 field align-left mtop-1">
+        <input
+          type="checkbox"
+          id="terms-condition"
+          formControlName="termscondition"
+          value="terms-condition"
+          required
+        />
+        &nbsp;
+        <label for="vehicle1"
+          >I agree to the
+          <span class="lightgreen-underline"
+            ><a
+              href="https://www.farmfreshlink.com/terms-of-service-legal-disclaimer/"
+              target="_blank"
+            >
+              Terms & Conditions</a
+            ></span
+          ></label
+        >
+      </div>
+    </div>
+
+    <div class="row submission mtop-2">
+      <div class="col-md-12">
+        <h6>
+          By registering, you confirm that you agree to the processing of your
+          personal data by Farmlink as described in the Privacy Statement.
+        </h6>
+      </div>
+
+      <div class="col-md-6 field mt-5 offset-md-3">
+        <button
+          class="submit-btn col-md-11 border-0"
+          (click)="signUpClick(sigupForm)"
+          [disabled]="!sigupForm.valid"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <div class="col-md-12 account-text">
+        <p>
+          Already have an account?
+          <span class="lightgreen-underline"
+            ><a (click)="loginClick()" href="javascript:void(0)"
+              >Log in</a
+            ></span
+          >
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

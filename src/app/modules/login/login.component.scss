@@ -1,0 +1,48 @@
+.input-icons i {
+  position: absolute;
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 6px;
+  text-align: left;
+  padding-left: 35px;
+  border: 1.5px solid #1e1e1e;
+}
+.input-field:focus {
+  outline: none;
+}
+.chk {
+  height: 18px;
+}
+.chk_input {
+  width: 10%;
+  float: left;
+}
+.chk_lable {
+  float: left;
+}
+.forgot-lbl {
+  float: right;
+  font-size: 13px;
+}
+.icon2 {
+  // margin-left: -38px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  flex-wrap: nowrap;
+}
+.bi::before {
+  margin-right: 10px;
+}

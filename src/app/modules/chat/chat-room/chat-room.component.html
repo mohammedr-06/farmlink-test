@@ -1,0 +1,100 @@
+<div class="main-body w-100" id="dashboard">
+    <app-header titleName="Chat"></app-header>
+    <div class="section-details">
+        <div class="msg"></div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div *ngIf="isLoading">
+                    <div class="spinner-border" role="status" >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                    <span class="waitmsg">Please wait...</span>
+                </div>
+                
+                <div class="chat-section" *ngIf="!isLoading"> 
+                    <div class="row">
+                        <div class="col-md-4 header-search-bar chat-search-bar col-lg-3 pe-4">
+                            <div class="inner-row">
+                                <form class="form-inline my-2 my-lg-0" *ngIf="userListRes.length !== 0">
+                                    <i class="bi bi-search"></i><input class="form-control mr-sm-2" type="order_search" placeholder="Search Chats..">
+                                </form>
+                                <ul class="chats-list" >
+                                    <ng-container *ngFor="let user of userListRes; let i=index">
+                                        <ng-container *ngIf="user?.groupChat;else normalPart">
+                                            <li (click)="UserClick(user)"><span class="date">{{user.chatTime | date:"HH:mm a" }}</span>
+                                                <img src="../../../../assets/images/user.png" alt="{{user.butcherData?.contactName}}" />
+                                                <span class="user-title">{{user?.farmerData?.contactName}},{{user?.butcherData?.contactName}}, {{user?.userData?.contactName}}</span>
+                                                <span class="user-msg text-truncate">{{user?.chatMessage}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-template #normalPart>
+                                            <li (click)="UserClick(user)"><span class="date">{{user?.chatTime | date:"HH:mm a" }}</span>
+                                                <img src="../../../../assets/images/user.png" alt="{{user.accountData.contactName}}" />
+                                                <span class="user-title">{{user.accountData?.contactName}}</span>
+                                                <span class="user-msg text-truncate">{{user?.chatMessage}}</span>
+                                            </li>
+                                        </ng-template>
+                                        
+                                    </ng-container>
+                                    <ng-container *ngIf="userListRes.length == 0">
+                                        <li >No User List found</li>
+                                    </ng-container>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 chat-window col-lg-9 ps-3" *ngIf="currentChatUser">
+                            <ng-container *ngIf="!isChatRoomReady">
+                                <div>
+                                    <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                    <span class="waitmsg">Please wait...</span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isChatRoomReady">
+                                <div class="profile-header">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-8">
+                                            <div class="profile-img">
+                                                  <img src="../../../../assets/images/logo-small.png" alt="Leslie Yanez" />
+                                              </div>
+                                              <ng-container *ngIf="currentChatUser?.groupChat;else normalPartDisplay">
+                                                <h3>{{currentChatUser?.farmerData?.contactName}}</h3>
+                                                <h3>{{currentChatUser?.butcherData?.contactName}}</h3>
+                                                <h3>{{currentChatUser?.userData?.contactName}}</h3>
+                                              </ng-container>
+                                              <ng-template #normalPartDisplay>                                               
+                                                    <h3>{{currentChatUser.accountData?.contactName}}</h3>
+                                                    <h4>{{currentChatUser.accountData?.userEmail}}</h4>
+                                                    <h4>{{currentChatUser.accountData?.phoneNumber}}</h4>
+                                              </ng-template>
+                                           
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="profile-chats" id="scrollMe"  #scrollMe [scrollTop]="scrollMe.scrollHeight" >
+                                    <ng-container *ngFor="let data of chatRes; let i=index">
+                                        
+                                        <div class="msg" [ngClass]="userInfo.id === data.senderId ? 'admin-msg' :'user-msg'">
+                                            {{data.text}}
+                                        </div>
+                                        <div class="msg" [ngClass]="userInfo.id === data.senderId ? 'admin-msg1' :'user-msg1'"> <span >{{data.senderName}}</span></div>
+                                    </ng-container>
+                                </div>
+                                <div class="send-msg-box">										
+                                        <input class="form-control mr-sm-2 w-80" [(ngModel)]="searchText" type="msg_box" placeholder="Type Message Here..">
+                                        <button (click)="onSendMessage()" class="submit-btn msg-send border-0 col-md-3">Send</button>
+                                    
+                                </div>
+                            </ng-container>
+                        </div>
+
+                    </div>
+                </div>			
+            </div>
+        </div>
+
+    </div>
+</div>

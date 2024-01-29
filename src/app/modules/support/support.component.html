@@ -1,0 +1,23 @@
+<!-- <div class="requestcls" (click)="openCategoryModel(requestTemplate)">+</div> -->
+<ng-template #requestTemplate>
+  <form [formGroup]="requestForm">
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="col-form-label">Enter New Category Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="submit-btn border-0 p-2" (click)="closePopup()">
+        Cancel
+      </button>
+      <button
+        class="submit-btn border-0 p-2"
+        (click)="requestSubmit(requestForm.value)"
+        [disabled]="!requestForm.valid"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</ng-template>

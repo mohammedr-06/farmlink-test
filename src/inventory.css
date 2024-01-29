@@ -1,0 +1,116 @@
+.btn{ background-color: #0D7E3E; color: #fff }
+.btn:hover{ background-color: #49B848; color: #fff }
+
+.success{ color: #0D7E3E }
+.danger{ color: #BF1E2E }
+
+.main-body{ display: flex; flex-direction: column }
+
+.main-application.inventory .main-body .section-details{ height: 100%; padding: 1.5em }
+.main-application.inventory .main-body .section-details > .row,
+.main-application.inventory .main-body .section-details > .row > .col,
+.main-application.inventory .main-body .section-details > .row > .col > .whitebox{ height: 100% }
+
+.main-application.inventory .main-body .section-details .whitebox{ position: relative }
+
+.main-application.inventory .kbs_add-inventory-button{ font-family: 'Montserrat', sans-serif; font-size: 1.25em; font-weight: 500; line-height: 1.2em; max-width: 230px; text-align: center; width: 100% }
+.main-application.inventory .kbs_add-inventory-button{ left: 50%; position: absolute; top: 50%; transform: translate(-50%, -50%) }
+.main-application.inventory .kbs_add-inventory-button a{ color: inherit; text-decoration: none }
+.main-application.inventory .kbs_add-inventory-button .bi{ align-items: center; background-color: #49B848; border-radius: 50%; color: #fff; display: flex; font-size: 84px; height: 150px; justify-content: center; margin: 0 auto 20px; width: 150px }
+
+.main-application.inventory .kbs_title-bar{ background-color: #0D7E3E; color: #fff; padding: 1.5em 1.75em }
+.main-application.inventory .kbs_title-bar h1{ font-size: 1.32em; font-weight: 500; line-height: 1em; margin: 0 }
+
+.main-application.inventory .kbs_form-body{ padding: 4% 2.5% }
+.main-application.inventory .kbs_form-body .form-group{ margin-bottom: 5% }
+
+.main-application.inventory .kbs_form-body label,
+.main-application.inventory .kbs_form-body .heading{ display: block; font-size: 1.313em; font-weight: 600 }
+.main-application.inventory .kbs_form-body .heading{ color: #0D7E3E !important; margin-bottom: 0; text-decoration-line: underline }
+
+.main-application.inventory .kbs_option-box{ align-items: center; background-color: #fff; border-radius: 7px; box-shadow: 0px 4px 4px rgb(0 0 0 / 25%); cursor: pointer; display: flex; flex-direction: column; justify-content: center; padding: 0.82em; text-align: center; transition: all 0.3s; width: 100%;position: relative;z-index:  9;}
+.main-application.inventory .kbs_option-box label{ display: block; font-size: 1.13em; font-weight: 500; line-height: 1em; margin-bottom: 5px }
+.main-application.inventory .kbs_option-box img{ transition: all 0.3s }
+
+.main-application.inventory .items .label-element{ margin-top: 20% }
+.main-application.inventory .items .kbs_option-box{ height: 118px; margin-top: 26px; max-width: 120px }
+/*.main-application.inventory .items .kbs_option-box:hover{ background-color: #c2d8ce; color: #fff }*/
+/*.main-application.inventory .items .kbs_option-box:hover img{ filter: brightness(0) invert(1) }*/
+
+input#image-file-input{
+width: 160px;
+    white-space: normal;
+    border: 0;
+    background: transparent;
+}
+
+.main-application.inventory .imageupload .col{ max-width: fit-content; max-width: -moz-fit-content; }
+.main-application.inventory .imageupload .kbs_option-box{ min-height: 180px; max-width: 180px }
+
+.main-application.inventory .kbs_filter-options{ list-style: none; margin: 0; padding: 0; text-align: center;display:block;}
+.main-application.inventory .kbs_filter-options .filter-btn{ display: inline-block; margin: 0 2.1% 2.1% }
+.main-application.inventory .kbs_filter-options .filter-btn label{ align-items: center; border: 1px solid #0D7E3E; border-radius: 7px; color: #0D7E3E; cursor: pointer; display: flex; font-size: 1.25em; font-weight: 500; height: 38px; justify-content: center; min-width: 125px; padding: 0.25em 0.75em; width: 100%;background: transparent; }
+.main-application.inventory .kbs_filter-options .filter-btn label.active { background-color: #0D7E3E; color: #fff }
+.main-application.inventory .kbs_filter-options .filter-btn input{position: absolute;clip: rect(0,0,0,0);pointer-events: none;}
+
+.main-application.inventory .kbs_form-body form textarea{ background-color: #EDEAEA; border-radius: 7px; border-width: 0; height: 90px; max-width: 706px; outline: none; padding: 0.82em; resize: none; width: 100% }
+.main-application.inventory .kbs_form-body form textarea:focus,
+.main-application.inventory .kbs_form-body form textarea:focus-visible{ border-width: 1px }
+
+.kbs_form-body form .buttons{  }
+.main-application.inventory .kbs_form-body form .buttons .col-btn{ max-width: fit-content; max-width: -moz-fit-content }
+.main-application.inventory .kbs_form-body form .buttons a,
+.main-application.inventory .kbs_form-body form .buttons input[type=submit]{ align-items: center; background-color: #fff; border: 1px solid #444544; border-radius: 7px; color: #444544; cursor: pointer; display: flex; font-size: 1.25em; font-weight: 500; height: 38px; justify-content: center; margin: 0; max-width: 125px; min-width: 125px; padding: 0.25em 0.75em; transition: all 0.3s; width: 100% }
+.main-application.inventory .kbs_form-body form .buttons a:hover,
+.main-application.inventory .kbs_form-body form .buttons input[type=submit]:hover{ background-color: #444544; color: #fff; text-decoration: none }
+
+.main-application.inventory .tab-data{ display: flex; flex-direction: column; height: 100% }
+
+.main-application.inventory .tab-data.order-section .nav-tabs .nav-item a{ font-size: 1.25em }
+
+.main-application.inventory .tab-content{ background-color: #fff; height: 100%; padding: 2em 0 }
+.main-application.inventory .tab-content .top-infos{ padding-left: 2%; padding-right: 2%;margin-bottom:1em;}
+.main-application.inventory .tab-content .top-infos .col{ max-width: fit-content; max-width: -moz-fit-content }
+
+.main-application.inventory .tab-content table th,
+.main-application.inventory .tab-content table td{ text-align: center }
+.main-application.inventory .tab-content table td a{ text-decoration: underline }
+.main-application.inventory .tab-content table td a:hover{ color: inherit }
+
+.main-application.inventory .quantity-box{ font-weight: 600; margin-left: auto; margin-right: auto; max-width: 120px; width: 100% }
+.main-application.inventory .quantity-box span{ align-items: center; border-radius: 6px; color: #fff; cursor: pointer; display: flex; font-size: 1.55em; height: 26px; justify-content: center; width: 35px }
+.main-application.inventory .quantity-box span.minus{ background-color: #D6D6D6; margin-right: 0.45em }
+.main-application.inventory .quantity-box span.plus{ background-color: #0D7E3E; margin-left: 0.45em }
+
+
+@media (max-width: 980px){
+.main-application .main-body { height: 100% }
+}
+
+@media all and (min-width: 768px) {
+	.main-application.inventory .items .justify-content-center{ justify-content: flex-start !important }
+}
+
+@media all and (min-width: 992px) {
+	.main-application.inventory .kbs_title-bar{ margin-left: -1.5em; margin-right: -1.5em; margin-top: -1em }
+	.main-application.inventory .imageupload .justify-content-center{ justify-content: flex-start !important }
+}
+
+@media all and (max-width: 991px) {
+	.main-application.inventory .kbs_option-box{ margin-left: auto; margin-right: auto }
+	.main-application.inventory .kbs_filter-options li a{ font-size: 1em }
+}
+
+@media all and (max-width: 767px) {
+	.main-application.inventory .kbs_form-body .form-group{ margin-bottom: 15% }
+	.main-application.inventory .kbs_form-body label,
+	.main-application.inventory .kbs_form-body .heading{ text-align: center }
+}
+
+@media all and (max-width: 480px) {
+	.main-application.new-inventory .main-body .section-details{ padding: 0 }
+	.main-application.new-inventory .main-body .whitebox{ border-radius: 0; padding: 0 }
+	.main-application.inventory .kbs_title-bar{ padding: 1em }
+	.main-application.inventory .kbs_form-body{ padding: 1em }
+	.main-application.inventory .tab-content .top-infos .col{ text-align: center; max-width: 100% }
+}

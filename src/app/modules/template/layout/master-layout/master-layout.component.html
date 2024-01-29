@@ -1,0 +1,28 @@
+<ng-container *ngIf="checkIsLoggedIn;else loginTemplate">
+    <div class="c-container flex-desktop">
+        
+        <header>
+            <ng-container [ngSwitch]="userType">
+                <div *ngSwitchDefault>
+                    <app-admin-left-side></app-admin-left-side>
+                </div>
+                <div *ngSwitchCase="'BUTCHER'">
+                    <app-bucher-left-side></app-bucher-left-side>
+                </div>
+                <div *ngSwitchCase="'FARMER'">
+                    <app-left-side></app-left-side>
+                </div>
+            </ng-container>
+        </header>
+        <div class="main-body" id="main-body">
+            <router-outlet></router-outlet>
+            
+        </div>
+        <div class="clearfix"></div>
+       
+    </div>
+    <app-footer></app-footer>
+</ng-container>
+<ng-template #loginTemplate>
+    <router-outlet></router-outlet>
+</ng-template>

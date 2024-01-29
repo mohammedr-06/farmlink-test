@@ -1,0 +1,155 @@
+<div class="main-body w-100">
+  <app-header titleName="Manage Orders"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar">
+            <h1>All Order</h1>
+          </div>
+          <div class="kbs_form-body table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th
+                    width="14%"
+                    scope="col"
+                    [class.active]="order === 'orderDate'"
+                    (click)="setOrder('orderDate')"
+                  >
+                    Date<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th width="14%">Order No</th>
+                  <th width="25%">Name</th>
+                  <th width="18%">Amount</th>
+                  <th
+                    width="18%"
+                    scope="col"
+                    [class.active]="order === 'status'"
+                    (click)="setOrder('status')"
+                  >
+                    Status<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of OrderData | paginate : pagingConfig">
+                  <td>{{ item.orderDate | date : "dd/MM/yyyy" }}</td>
+                  <td>{{ item.orderNumber }}</td>
+                  <td>{{ item.customerName }}</td>
+                  <td>{{ item?.totalAmount | currency }}</td>
+                  <td>
+                    <span
+                      class="badge bg-success"
+                      *ngIf="item.status === 'Completed'"
+                      >{{ item.status }}</span
+                    >
+                    <span
+                      class="badge bg-danger"
+                      *ngIf="item.status === 'Cancelled'"
+                      >{{ item.status }}</span
+                    >
+                    <span
+                      class="badge bg-warning text-dark"
+                      *ngIf="
+                        item.status !== 'Completed' &&
+                        item.status !== 'Cancelled'
+                      "
+                      >{{ item.status }}</span
+                    >
+                  </td>
+                  <td>
+                    <a (click)="viewOrder(item)" title="View Order"
+                      ><i class="bi bi-eye-fill"></i></a
+                    >&nbsp;&nbsp;
+                    <span
+                      *ngIf="
+                        item.status !== 'Completed' &&
+                        item.status !== 'Cancelled'
+                      "
+                    >
+                      <a
+                        (click)="changeStatus(changedStatus, item)"
+                        title="Change Order Status"
+                        ><i class="bi bi-pencil"></i
+                      ></a>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3" *ngIf="this.pagingConfig.totalItems > 0">
+            <div class="col-md-12 text-end">
+              <div class="no-of-row text-end me-2">
+                <label class="control-label no-og-lbl" for="noOfRows"
+                  >No. of Rows</label
+                >
+                <select
+                  name="noOfRows"
+                  (change)="onTableSizeChange($event)"
+                  class="form-select form-select-sm"
+                >
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="pageing">
+                <pagination-controls (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #changedStatus>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Update Status</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closePopup()"
+        ></button>
+      </div>
+      <form [formGroup]="orderForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-10" style="margin: 0 auto; padding-bottom: 25px">
+              <div class="form-group">
+                <label class="col-form-label">Status:</label>
+                <select class="form-select" formControlName="orderStatus">
+                  <option
+                    *ngFor="let option of orderStatusArr"
+                    [value]="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="submit-btn border-0 p-2" (click)="closePopup()">
+            Cancel
+          </button>
+          <button
+            class="submit-btn border-0 p-2"
+            (click)="updateStatus(orderId, orderForm)"
+            [disabled]="!orderForm.valid"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,954 @@
+<div
+  class="main-body w-100"
+  [ngClass]="{ 'butchers-profile': userInfo?.accountType === 'BUATCHER' }"
+>
+  <app-header titleName="Profile"></app-header>
+  <div class="section-details">
+    <div class="profile-header">
+      <div class="row">
+        <div class="col-lg-2">
+          <label class="hoverable" for="fileInput">
+            <img
+              [src]="
+                url ? url : '../../../../assets/images/user-profile-picture.png'
+              "
+            />
+            <div class="hover-text">
+              Choose file
+              <span class="camera-icon"><i class="bi bi-camera-fill"></i></span>
+            </div>
+            <div class="background"></div>
+          </label>
+          <br />
+          <input id="fileInput" type="file" (change)="onSelectFile($event)" />
+
+          <!--<div class="picture-upload">
+                        <img src="../../../../assets/images/user-profile-picture.png" alt="Profile Picture">
+                        <span class="camera-icon"><i class="bi bi-camera-fill"></i></span>
+                    </div>-->
+        </div>
+
+        <div class="col-lg-6 offset-lg-1">
+          <div class="profile-name">
+            <h3>Hey {{ userInfo.contactName }}!</h3>
+            <p>
+              You can set and customize your profile information for customers
+              to see!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-customization-table" style="width: 100%">
+      <div class="heading">
+        <h3>Profile</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tbody>
+            <tr class="no-border">
+              <th scope="row" class="col-1-table">Email</th>
+              <td class="col-2-table email">{{ userInfo?.userEmail }}</td>
+              <td class="col-2-table setting-edit">
+                &nbsp;
+                <!--<button type="button" (click)="openEmailModal(emailedit,userInfo.userEmail)">Edit</button>-->
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">
+                {{ userInfo.accountType | titlecase }} Name
+              </th>
+              <td class="col-2-table farmer-name">
+                {{ userInfo.contactName }}
+              </td>
+              <td class="col-2-table setting-edit">
+                <button
+                  class="profile-btn"
+                  type="button"
+                  (click)="
+                    openFarmerModal(farmernameedit, userInfo.contactName)
+                  "
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Farm Name</th>
+              <td class="col-2-table farm-name">{{ userInfo?.companyName }}</td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="openFarmModal(farmnameedit, userInfo.companyName)"
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Password</th>
+              <td class="col-2-table password">
+                <i class="bi bi-record-fill"></i
+                ><i class="bi bi-record-fill"></i
+                ><i class="bi bi-record-fill"></i
+                ><i class="bi bi-record-fill"></i
+                ><i class="bi bi-record-fill"></i>
+              </td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="openPasswordModal(passwordedit, '')"
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Phone Number</th>
+              <td class="col-2-table phone">
+                {{ userInfo?.phoneNumber | phoneFormat }}
+              </td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="openPhoneModal(phoneedit, userInfo.phoneNumber)"
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Address</th>
+              <td class="col-2-table address">
+                {{ userInfo?.address.address }}, {{ userInfo?.address.state }},
+                {{ userInfo?.address.city }}, {{ userInfo?.address.postcode }}
+              </td>
+              <td class="col-2-table setting-edit">
+                <button type="button" (click)="openAddressModal()">Edit</button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Cities Availble In</th>
+              <td class="col-2-table cities">
+                {{ userInfo?.availableCities }}
+              </td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="
+                    openCititesModal(citiesedit, userInfo?.availableCities)
+                  "
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Payment Method</th>
+              <td class="col-2-table payment-mehtod">
+                {{ userInfo?.paymentMethod }}
+              </td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="
+                    openPaymentModal(paymentmehtodedit, userInfo?.paymentMethod)
+                  "
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Timings</th>
+              <td class="col-2-table timings">
+                <div *ngFor="let item of userInfo?.timings" class="row">
+                  <div
+                    *ngIf="
+                      item.open &&
+                        item.startTime !== 'Closed' &&
+                        item.startTime !== '';
+                      else loggedOut
+                    "
+                    class="col-md-12"
+                  >
+                    <div class="day-s">{{ item.day }} :</div>
+                    <div class="day-e" style="display: flex">
+                      <div *ngIf="item.startTime == 0; else showStartime">
+                        N/A
+                      </div>
+                      <ng-template #showStartime>
+                        {{ item.startTime }}
+                      </ng-template>
+                      -
+                      <div *ngIf="item.endTime == 0; else showEndtime">N/A</div>
+                      <ng-template #showEndtime>
+                        {{ item.endTime }}
+                      </ng-template>
+                    </div>
+                  </div>
+                  <ng-template #loggedOut>
+                    <div class="col-md-12">
+                      <span class="day-s">{{ item.day }} :</span> Closed
+                    </div></ng-template
+                  >
+                  <ng-template #notApplicable>
+                    <div class="col-md-12">
+                      <span class="day-s">{{ item.day }} :</span> N/A
+                    </div>
+                  </ng-template>
+                </div>
+              </td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="openTimeModal(timingsedit, userInfo?.timings)"
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Description</th>
+              <td class="col-2-table description">{{ userInfo?.aboutus }}</td>
+              <td class="col-2-table setting-edit">
+                <button
+                  type="button"
+                  (click)="openDescModal(descriptionedit, userInfo?.aboutus)"
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="col-1-table">Subscription</th>
+              <td class="col-2-table description">-</td>
+              <td class="col-2-table setting-edit">
+                <a href="{{ subscriptionURL }}" class="sublink" target="_blank"
+                  >Edit</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #farmernameedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new"
+        >{{ userInfo.accountType | titlecase }} Name</span
+      >
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <!-- <label class="col-form-label">Farmer Name:</label> -->
+          <input
+            type="text"
+            class="form-control"
+            formControlName="farmerName"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="farmerNameSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #farmnameedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Farm Name</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <!-- <label class="col-form-label">Farm Name:</label> -->
+          <input type="text" class="form-control" formControlName="farmName" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="farmSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #citiesedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Available Cities</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <!-- <label class="col-form-label">Available Cities:</label> -->
+        <tag-input
+          [(ngModel)]="items"
+          theme="bootstrap"
+          [secondaryPlaceholder]="'Enter City Name'"
+          placeholder="Enter City Name"
+          (onRemove)="onItemRemoved($event)"
+          (onAdd)="onItemAdded($event)"
+        ></tag-input>
+        <span style="font-size: 12px"
+          ><b>Notes:</b> Please type city name and press enter, it will convert
+          into tag</span
+        >
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="submit-btn border-0 p-2" (click)="closePopup()">
+        Cancel
+      </button>
+      <button
+        class="submit-btn border-0 p-2"
+        (click)="availableCitiesSubmt()"
+        [disabled]="items.length == 0"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #passwordedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Password</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="row" *ngIf="errorMessage !== ''">
+          <div class="col-md-11">
+            <div class="alert alert-danger" role="alert">
+              {{ errorMessage }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Old Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="oldPassword"
+          />
+        </div>
+        <div
+          *ngIf="
+            contactForm.controls['oldPassword'].invalid &&
+            (contactForm.controls['oldPassword'].dirty ||
+              contactForm.controls['oldPassword'].touched)
+          "
+          class="error mt-2"
+        >
+          <div *ngIf="contactForm.controls['oldPassword'].errors.required">
+            Old Password is required.
+          </div>
+        </div>
+        <div class="form-group mt-4">
+          <label class="col-form-label">New Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+          />
+        </div>
+        <div
+          *ngIf="
+            contactForm.controls['password'].invalid &&
+            (contactForm.controls['password'].dirty ||
+              contactForm.controls['password'].touched)
+          "
+          class="error mt-2"
+        >
+          <div *ngIf="contactForm.controls['password'].errors.required">
+            New Password is required.
+          </div>
+        </div>
+        <div class="form-group mt-4">
+          <label class="col-form-label">Confirm Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="confirmpassword"
+          />
+        </div>
+        <div
+          *ngIf="
+            contactForm.controls['confirmpassword'].invalid &&
+            (contactForm.controls['confirmpassword'].dirty ||
+              contactForm.controls['confirmpassword'].touched)
+          "
+          class="error mt-2"
+        >
+          <div *ngIf="contactForm.controls['confirmpassword'].errors.required">
+            Confirm Password is required.
+          </div>
+        </div>
+        <!-- <div *ngIf="contactForm.controls['confirmpassword'].errors.mustMatch" class="error mt-2">New Password and Re Enter New Password should be same </div>-->
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="passwordSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #phoneedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Phone Number</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <!-- <label class="col-form-label">Phone Number:</label> -->
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="phoneNo"
+            maxlength="14"
+            mask="(000) 000-000000"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="phoneSubmit(contactForm)"
+        >
+          Save
+        </button>
+        <!-- [disabled]="!contactForm.valid" -->
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #addressedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Address</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">Street Address:</label>
+          <input type="text" class="form-control" formControlName="address" />
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label class="col-form-label">City:</label>
+              <input type="text" class="form-control" formControlName="city" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="col-form-label">State:</label>
+              <input type="text" class="form-control" formControlName="state" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-form-label">Zip Code:</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="zipCode"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="addressSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #paymentmehtodedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Payment Methods</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <!-- <label class="col-form-label"></label> -->
+        <h6>*Select all that apply</h6>
+        <div class="row">
+          <div class="col-md-2 align-center col-4">
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id="cash"
+                formControlName="cash"
+                value="cash"
+              />
+              <div class="payment-icon">
+                <img
+                  style="height: 50px"
+                  src="../../../../assets/images/icons/cash-icon.png"
+                  alt="Cash Icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 align-center col-4">
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id="Zelle"
+                formControlName="zelle"
+                value="Zelle"
+              />
+              <div class="payment-icon">
+                <img
+                  style="height: 50px"
+                  src="../../../../assets/images/icons/zelle-icon.png"
+                  alt="Zelle Icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 align-center col-4">
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id="check"
+                formControlName="check"
+                value="check"
+              />
+              <div class="payment-icon">
+                <img
+                  style="height: 50px"
+                  src="../../../../assets/images/icons/cheque-icon.png"
+                  alt="Cheque Icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 align-center col-4">
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id="banktransfer"
+                formControlName="banktransfer"
+                value="banktransfer"
+              />
+              <div class="payment-icon">
+                <img
+                  style="height: 50px"
+                  src="../../../../assets/images/icons/bank-transfer-icon.png"
+                  alt="bank Icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 align-center col-4">
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id="bitcoin"
+                formControlName="bitcoin"
+                value="bitcoin"
+              />
+              <div class="payment-icon mt-1">
+                <img
+                  style="height: 50px"
+                  src="../../../../assets/images/icons/bitcoin-icon.png"
+                  alt="Bitcoin Icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 align-center col-4">
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id="credit-card"
+                formControlName="creditcard"
+                value="credit-card"
+              />
+              <div class="payment-icon">
+                <img
+                  style="height: 50px"
+                  src="../../../../assets/images/icons/creditcard-icon.png"
+                  alt="Credit Card Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="paymentSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #timingsedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Timings</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="row border-bottom mb-2">
+          <div class="col-md-4">
+            <label class="col-form-label">Day's</label>
+          </div>
+          <div class="col-md-4 text-center">
+            <label class="col-form-label timing-label">Start Time</label>
+          </div>
+          <div class="col-md-4 text-center">
+            <label class="col-form-label timing-label">End Time</label>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Monday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="mondayTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="mondayTimingEnd"
+              [attr.disabled]="isEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Tuesday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="tusdayTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="tusdayTimingEnd"
+              [attr.disabled]="tuesdayEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Wednesday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="wendayTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="wendayTimingEnd"
+              [attr.disabled]="wednesdayEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Thursday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="thudayTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="thudayTimingEnd"
+              [attr.disabled]="thudayEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Friday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="fridTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="fridTimingEnd"
+              [attr.disabled]="fridEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Saturday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="satdayTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="satdayTimingEnd"
+              [attr.disabled]="satdayEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="col-form-label">Sunday</label>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="sundayTimingStart"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select
+              class="form-select col-md-6"
+              formControlName="sundayTimingEnd"
+              [attr.disabled]="sundayEndTimeDisabled() ? true : null"
+            >
+              <option *ngFor="let option of hrs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="timeSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #descriptionedit>
+  <div class="all-customization-popups">
+    <div class="modal-header">
+      <span class="modal-title modal-title-new">Description</span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="closePopup()"
+      ></button>
+    </div>
+    <form [formGroup]="contactForm">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group mt-4">
+              <!-- <label class="col-form-label">Description:</label> -->
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                cols="30"
+                formControlName="description"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn border-0 p-2" (click)="closePopup()">
+          Cancel
+        </button>
+        <button
+          class="submit-btn border-0 p-2"
+          (click)="descriptionSubmit(contactForm)"
+          [disabled]="!contactForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

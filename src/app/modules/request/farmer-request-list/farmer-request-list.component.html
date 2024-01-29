@@ -1,0 +1,208 @@
+<div class="main-body w-100">
+  <app-header titleName="All Request"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar">
+            <h1>All Request</h1>
+          </div>
+          <div class="kbs_form-body">
+            <div class="form-group row border-bottom">
+              <label for="staticEmail" class="col-sm-4 col-form-label"
+                >Filter By Request Type</label
+              >
+              <div class="col-sm-4">
+                <select
+                  class="form-select"
+                  [(ngModel)]="selectedFilter"
+                  (change)="onFilterChange(selectedFilter)"
+                >
+                  <option value="category" selected>Category</option>
+                  <option value="unit">Unit</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-c">
+                <thead>
+                  <ng-container
+                    *ngIf="selectedFilter === 'category'; else unitHeader"
+                  >
+                    <tr>
+                      <th
+                        width="14%"
+                        scope="col"
+                        [class.active]="order === 'createdDate'"
+                        (click)="setOrder('createdDate')"
+                      >
+                        Date <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <!-- <th width="14%">Request No</th> -->
+                      <th
+                        width="15%"
+                        scope="col"
+                        [class.active]="order === 'farmerName'"
+                        (click)="setOrder('farmerName')"
+                      >
+                        Farmer Name <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th
+                        width="45%"
+                        scope="col"
+                        [class.active]="order === 'categoryName'"
+                        (click)="setOrder('categoryName')"
+                      >
+                        Category Request <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th
+                        width="18%"
+                        scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                      >
+                        Status <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <th>Comments</th>
+                    </tr>
+                  </ng-container>
+                  <ng-template #unitHeader>
+                    <tr>
+                      <th width="14%">
+                        Date<span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                      </th>
+                      <!-- <th width="14%">Request No</th> -->
+                      <th width="15%">Farmer Name</th>
+                      <th width="45%">Unit Request</th>
+                      <th width="18%">Status</th>
+                      <th>Comments</th>
+                    </tr>
+                  </ng-template>
+                </thead>
+
+                <tbody>
+                  <ng-container
+                    *ngFor="
+                      let item of getRequestedCategoriesList
+                        | paginate : pagingConfig
+                    "
+                  >
+                    <tr
+                      *ngIf="
+                        selectedFilter === 'category' && item.categoryName;
+                        else unitRow
+                      "
+                    >
+                      <!-- Category rows -->
+                      <td>{{ item.date | date : "dd MMM yyyy" }}</td>
+                      <!-- <td>{{ item.request }}</td> -->
+                      <td>{{ item.farmerName }}</td>
+                      <td>{{ item.categoryName }}</td>
+                      <td>
+                        <span
+                          *ngIf="item.status === 'Approved'"
+                          class="badge bg-success"
+                          >{{ item.status }}</span
+                        >
+                        <span
+                          *ngIf="item.status === 'Rejected'"
+                          class="badge bg-danger"
+                          >{{ item.status }}</span
+                        >
+                        <span
+                          *ngIf="item.status === 'Requested'"
+                          class="badge bg-primary"
+                          >{{ item.status }}</span
+                        >
+                      </td>
+                      <td>{{ item.comment }}</td>
+                    </tr>
+                    <ng-template #unitRow>
+                      <!-- Unit rows -->
+                      <tr *ngIf="selectedFilter === 'unit' && item.unitName">
+                        <td>{{ item.date | date : "dd MMM yyyy" }}</td>
+                        <!-- <td>{{ item.request }}</td> -->
+                        <td>{{ item.farmerName }}</td>
+                        <td>{{ item.unitName }}</td>
+                        <td>
+                          <span
+                            *ngIf="item.status === 'Approved'"
+                            class="badge bg-success"
+                            >{{ item.status }}</span
+                          >
+                          <span
+                            *ngIf="item.status === 'Rejected'"
+                            class="badge bg-danger"
+                            >{{ item.status }}</span
+                          >
+                          <span
+                            *ngIf="item.status === 'Requested'"
+                            class="badge bg-primary"
+                            >{{ item.status }}</span
+                          >
+                        </td>
+                        <td>{{ item.comment }}</td>
+                      </tr>
+                    </ng-template>
+                  </ng-container>
+                </tbody>
+              </table>
+
+              <!-- <div class="col-md-12 text-end">
+                <div class="no-of-row text-end me-2">
+                  <label class="control-label no-og-lbl" for="noOfRows"
+                    >No. of Rows</label
+                  >
+                  <select
+                    name="noOfRows"
+                    (change)="onTableSizeChange($event)"
+                    class="form-select form-select-sm"
+                  >
+                    <option *ngFor="let size of tableSize" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="pageing">
+                  <pagination-controls (pageChange)="onTableDataChange($event)">
+                  </pagination-controls>
+                </div>
+                <div
+                  class="row mt-3"
+                  *ngIf="this.pagingConfig.totalItems > 0"
+                ></div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row mt-3" *ngIf="this.pagingConfig.totalItems > 0">
+            <div class="col-md-12 text-end">
+              <div class="no-of-row text-end me-2">
+                <label class="control-label no-og-lbl" for="noOfRows"
+                  >No. of Rows</label
+                >
+                <select
+                  name="noOfRows"
+                  (change)="onTableSizeChange($event)"
+                  class="form-select form-select-sm"
+                >
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="pageing">
+                <pagination-controls (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div *ngIf="alerts">
+    <ng-container *ngFor="let alert of alerts">
+        <div class="col-md-8 center-div">
+            <div  class="{{cssClass(alert)}} text-center">
+                <span [innerHTML]="alert.message"></span>
+                <button type="button"  (click)="removeAlert(alert)" class="btn-close ps-5" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </ng-container>
+   
+</div>
+
+
+<style>
+    .btn-close:hover{
+        background-color: transparent !important;
+    }
+    .center-div{
+    margin: 0 auto;
+    margin-top:20px;
+}
+</style>

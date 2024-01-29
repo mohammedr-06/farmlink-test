@@ -1,0 +1,269 @@
+<div class="main-body w-100">
+  <app-header titleName="Add Inventory"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar">
+            <h1>Add Inventory</h1>
+          </div>
+          <div class="kbs_form-body">
+            <div class="col-md-12" [formGroup]="addForm">
+              <div class="">
+                <button
+                  (click)="onAddRow()"
+                  [disabled]="rows.length >= 8"
+                  class="btn btn-success"
+                >
+                  add row
+                </button>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr class="table-success">
+                        <td>
+                          <label class="form-label f-14 ps-2"
+                            >Category<span class="red">*</span></label
+                          >
+                        </td>
+                        <td>
+                          <label class="form-label f-14 ps-2"
+                            >Item Name<span class="red">*</span></label
+                          >
+                        </td>
+                        <td>
+                          <label class="form-label f-14">Unit Value</label>
+                        </td>
+                        <td>
+                          <label class="form-label f-14 ps-2">Unit</label>
+                        </td>
+                        <td>
+                          <label class="form-label f-14 ps-2"
+                            >Quantity<span class="red">*</span></label
+                          >
+                        </td>
+                        <td>
+                          <label class="form-label f-14 ps-2"
+                            >Track Inventory</label
+                          >
+                        </td>
+                        <td>
+                          <label class="form-label f-14 ps-2">Price</label>
+                        </td>
+                        <td>
+                          <label class="form-label f-14 ps-2"
+                            >Description</label
+                          >
+                        </td>
+
+                        <!-- <td>  <label class="form-label f-14 ps-2">Upload Image<span class="red">*</span></label></td>-->
+                        <td>
+                          <label class="form-label f-14 ps-2">Action</label>
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let row of addForm.get('rows')['controls'];
+                          let index = index
+                        "
+                      >
+                        <td>
+                          <select
+                            class="form-select w-125"
+                            [formControl]="row.get('category')"
+                          >
+                            <option
+                              *ngFor="let catdata of categoryOption"
+                              [ngValue]="catdata"
+                            >
+                              {{ catdata.categoryName }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="
+                              row.controls.category.invalid &&
+                              (row.controls.category.dirty ||
+                                row.controls.category.touched)
+                            "
+                            class="error f-12 mt-2"
+                          >
+                            <div
+                              *ngIf="row.controls.category.errors['required']"
+                            >
+                              Category is required.
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control w-125"
+                            [formControl]="row.get('itemName')"
+                          />
+                          <div
+                            *ngIf="
+                              row.controls.itemName.invalid &&
+                              (row.controls.itemName.dirty ||
+                                row.controls.itemName.touched)
+                            "
+                            class="error f-12 mt-2"
+                          >
+                            <div
+                              *ngIf="row.controls.itemName.errors['required']"
+                            >
+                              Item Name is required.
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            class="form-control w-70"
+                            [formControl]="row.get('unitValue')"
+                          />
+                          <div
+                            *ngIf="
+                              row.controls.unitValue.invalid &&
+                              (row.controls.unitValue.dirty ||
+                                row.controls.unitValue.touched)
+                            "
+                            class="error f-12 mt-2"
+                          >
+                            <div
+                              *ngIf="row.controls.unitValue.errors['required']"
+                            >
+                              Unit Value is required.
+                            </div>
+                            <div *ngIf="row.get('unitValue').hasError('min')">
+                              Please enter a non-negative number.
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <select
+                            class="form-select w-70"
+                            [formControl]="row.get('unit')"
+                          >
+                            <option
+                              *ngFor="let unitdata of unitOption"
+                              [value]="unitdata.id"
+                            >
+                              {{ unitdata.unitName }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="
+                              row.controls.unit.invalid &&
+                              (row.controls.unit.dirty ||
+                                row.controls.unit.touched)
+                            "
+                            class="error f-12 mt-2"
+                          >
+                            <div *ngIf="row.controls.unit.errors['required']">
+                              Unit is required.
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            class="form-control w-125"
+                            [formControl]="row.get('qty')"
+                          />
+                          <div
+                            *ngIf="
+                              row.controls.qty.invalid &&
+                              (row.controls.qty.dirty ||
+                                row.controls.qty.touched)
+                            "
+                            class="error f-12 mt-2"
+                          >
+                            <div *ngIf="row.controls.qty.errors['required']">
+                              Quantity is required.
+                            </div>
+                          </div>
+                        </td>
+                        <td class="txt-center">
+                          <input
+                            type="checkbox"
+                            [formControl]="row.get('trackInventory')"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            class="form-control w-70"
+                            [formControl]="row.get('price')"
+                          />
+                          <div
+                            *ngIf="
+                              row.controls.price.invalid &&
+                              (row.controls.price.dirty ||
+                                row.controls.price.touched)
+                            "
+                            class="error f-12 mt-2"
+                          >
+                            <div *ngIf="row.controls.price.errors['required']">
+                              Price is required.
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control w-200"
+                            [formControl]="row.get('description')"
+                          />
+                        </td>
+
+                        <!--<td class="w-200">
+                                              <input (change)="onFilechange($event, index, row)" class="form-control w-200" type="file" enctype="multipart/form-data"  accept="image/*" [formControl]="row.get('fileInput')" #fileUpload>
+                                              <label *ngIf="imageError" class="error f-12 mt-2">
+                                                  {{row.get('fileErrormsg').value}}
+                                                  </label>
+                                              <div class="file-upload" *ngIf="row.get('preview').value && row.get('preview').value !== null">
+                                                  <img [src]="row.get('preview').value"  width="125" height="125">
+                                               </div>
+                                           
+                                              
+                                             </td> -->
+                        <td class="txt-center">
+                          <a (click)="onRemoveRow(index)"
+                            ><i class="bi bi-trash-fill"></i
+                          ></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <button
+                      class="submit-btn border-0 col-md-2 f-14"
+                      (click)="cancelClick()"
+                    >
+                      Cancel
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      class="submit-btn border-0 col-md-2 f-14"
+                      (click)="submitCategoryData(addForm)"
+                      [disabled]="!addForm.valid"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--<pre>{{rows.value | json}}</pre> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+.setting-edit {
+  padding: 3px !important;
+}
+.day-s {
+  width: 20%;
+  float: left;
+}
+.day-e {
+  float: left;
+}
+/****************************images******************/
+p {
+  font-family: Lato;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
+.hoverable {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  height: 129px;
+  width: 133px;
+  border: 2px solid #fff;
+  border-radius: 5%;
+}
+.hoverable .hover-text {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.hoverable .background {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 1;
+}
+.hoverable:hover .hover-text {
+  display: block;
+}
+.hoverable:hover .background {
+  display: block;
+}
+
+#fileInput {
+  display: none;
+}
+.sublink {
+  font-size: 1.25em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.6em;
+  border-radius: 4px;
+  transition: 0.2s;
+  margin-bottom: 0.7em;
+  color: #0d7e3e;
+}
+.sublink:hover {
+  color: #444544;
+}
+.main-application .main-body .profile-header.admin-profile {
+  background-color: deeppink !important;
+}

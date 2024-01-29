@@ -1,0 +1,53 @@
+<div class="main-body w-100">
+    <app-header titleName="Unit Management"></app-header>
+    <div class="section-details">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col">
+                <div class="whitebox sales-overview">
+                    <div class="kbs_title-bar">
+                        <h1 *ngIf="!isEdit">Add Unit</h1>
+                        <h1 *ngIf="isEdit">Update Unit</h1>
+                    </div>
+                    <div class="kbs_form-body ">
+                        <form [formGroup]="unitForm">
+                            <div class="row mt-3 ms-5 me-5">
+                                <div class="col-md-6">
+                                    <label class="form-label f-14">Unit Name </label>
+                                    <input type="text" class="form-control f-14" formControlName="unitName">
+                                    <div *ngIf="unitForm.controls['unitName'].invalid && (unitForm.controls['unitName'].dirty || unitForm.controls['unitName'].touched)"
+                                        class="error mt-2">
+                                        <div *ngIf="unitForm.controls['unitName'].errors['required']">
+                                            Unit Name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ms-5 me-5">
+                                <div class="col-md-6">
+                                    <label class="form-label f-14">Status </label>
+                                    <select class="form-select" formControlName="status">
+                                        <option value="">Select</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                    <div *ngIf="unitForm.controls['status'].invalid && (unitForm.controls['status'].dirty || unitForm.controls['status'].touched)"
+                                        class="error mt-2">
+                                        <div *ngIf="unitForm.controls['status'].errors['required']">
+                                            Status is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ms-5 me-5">
+                                <div class="col-md-8 col-btn">
+                                    <button class="submit-btn border-0 col-md-3" (click)="cancelClick()">Cancel</button> &nbsp;&nbsp;
+                                    <button class="submit-btn border-0 col-md-3" (click)="submitUnitData(unitForm)" [disabled]="!unitForm.valid">Submit</button>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

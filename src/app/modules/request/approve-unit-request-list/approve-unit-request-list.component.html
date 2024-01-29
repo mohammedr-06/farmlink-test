@@ -1,0 +1,168 @@
+<div class="main-body w-100">
+  <app-header titleName="Unit Request"></app-header>
+  <div class="section-details">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col">
+        <div class="whitebox sales-overview">
+          <div class="kbs_title-bar">
+            <h1>Unit Approval Request</h1>
+          </div>
+          <div class="kbs_form-body table-responsive">
+            <table class="table table-c">
+              <thead>
+                <tr>
+                  <th
+                    width="14%"
+                    scope="col"
+                    [class.active]="order === 'createdDate'"
+                    (click)="setOrder('createdDate')"
+                  >
+                    Date <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+
+                  <!-- <th width="14%">Request No</th> -->
+                  <th
+                    width="15%"
+                    scope="col"
+                    [class.active]="order === 'farmerName'"
+                    (click)="setOrder('farmerName')"
+                  >
+                    Farmer Name <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    width="45%"
+                    scope="col"
+                    [class.active]="order === 'unitName'"
+                    (click)="setOrder('unitName')"
+                  >
+                    Unit Request <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th
+                    width="18%"
+                    scope="col"
+                    [class.active]="order === 'status'"
+                    (click)="setOrder('status')"
+                  >
+                    Status <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                  </th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="!this.isLoading">
+                <tr
+                  *ngFor="
+                    let item of getRequestedUnitList | paginate : pagingConfig
+                  "
+                >
+                  <td>{{ item.date | date : "dd MMM yyyy" }}</td>
+                  <!-- <td>{{ item.request }}</td> -->
+                  <td>{{ item.farmerName }}</td>
+                  <td>{{ item.unitName }}</td>
+                  <td>
+                    <span
+                      *ngIf="item.status === 'Approved'"
+                      class="badge bg-success"
+                      >{{ item.status }}</span
+                    >
+                    <span
+                      *ngIf="item.status === 'Rejected'"
+                      class="badge bg-danger"
+                      >{{ item.status }}</span
+                    >
+                    <span
+                      *ngIf="item.status === 'Requested'"
+                      class="badge bg-primary"
+                      >{{ item.status }}</span
+                    >
+                  </td>
+
+                  <td>
+                    <a
+                      (click)="openUpdateStatusModel(requestTemplate, item.id)"
+                      [class.disabled]="isActionButtonDisabled(item.status)"
+                      ><i class="bi bi-pencil-fill"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3" *ngIf="this.pagingConfig.totalItems > 0">
+            <div class="col-md-12 text-end">
+              <div class="no-of-row text-end me-2">
+                <label class="control-label no-og-lbl" for="noOfRows"
+                  >No. of Rows</label
+                >
+                <select
+                  name="noOfRows"
+                  (change)="onTableSizeChange($event)"
+                  class="form-select form-select-sm"
+                >
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="pageing">
+                <pagination-controls (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #requestTemplate>
+      <div class="all-customization-popups">
+        <div class="modal-header">
+          <span class="modal-title modal-title-new"> Update Status </span>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="closePopup()"
+          ></button>
+        </div>
+        <form [formGroup]="requestForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="col-form-label"
+                >Status<span class="red">*</span></label
+              >
+              <select class="form-select" formControlName="status">
+                <option value="Approved" selected>Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="form-group mt-3">
+              <label class="col-form-label"
+                >Comment<span class="red">*</span></label
+              >
+              <textarea
+                formControlName="comment"
+                class="form-control"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="submit-btn border-0 p-2" (click)="closePopup()">
+              Cancel
+            </button>
+            <button
+              class="submit-btn border-0 p-2"
+              (click)="requestSubmit(requestForm.value)"
+              [disabled]="!requestForm.valid"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+</div>

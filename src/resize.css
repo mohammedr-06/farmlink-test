@@ -1,0 +1,380 @@
+@media (min-width: 981px) {
+  .login-screen .form {
+    width: 45%;
+  }
+  .signup-form {
+    width: 75%;
+  }
+  .flex-desktop {
+    display: flex;
+  }
+  .login-screen .signup-buttons {
+    width: 38%;
+  }
+  .main-application header .custom-menu ul li a {
+    font-size: 0.8em;
+  }
+  .main-application header .custom-menu ul {
+    margin-right: 0 !important;
+  }
+  .main-application header .custom-menu {
+    padding: 0 0.75em;
+  }
+  .main-application header .leftbar-toolbar {
+    padding: 1em 0em;
+  }
+  .main-application .main-body .whitebox {
+    padding: 0.9em 0.7em;
+  }
+  .main-application .main-body .sales-details .sales-details-box h6 {
+    font-size: 0.6em;
+  }
+  .main-application .main-body .sales-details .sales-details-box {
+    padding: 0.7em 0.4em;
+  }
+  .main-application .main-body .sales-details .sales-details-box h5 {
+    font-size: 1.32em;
+  }
+  .main-application .main-body .sales-details .sales-details-box p {
+    font-size: 0.7em;
+  }
+  .main-application .main-body .sales-details .sales-details-box {
+    background-size: 17% !important;
+  }
+  .main-application .main-body .inventory-details .inventory-details-box h5 {
+    font-size: 1.32em;
+  }
+  .main-application .main-body .inventory-details .inventory-details-box {
+    padding: 0.7em 0.3em;
+    background-size: 40% !important;
+  }
+  .main-application .main-body .inventory-details .inventory-details-box h6 {
+    font-size: 0.8em;
+  }
+  .mright-4 {
+    margin-right: 3.5em;
+  }
+  .order-section .nav-tabs .nav-item a {
+    font-size: 75%;
+  }
+
+  .grp-chats-list li .date {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+@media (min-width: 1300px) {
+  .login-screen .form {
+    width: 35%;
+  }
+  .signup-form {
+    width: 60%;
+  }
+  .login-screen .signup-buttons {
+    width: 25%;
+  }
+}
+
+@media (min-width: 1450px) {
+  .login-screen .form {
+    width: 32%;
+  }
+  .signup-form {
+    width: 50%;
+  }
+  .login-screen .signup-buttons {
+    width: 22%;
+  }
+  .main-application header .custom-menu ul li a {
+    font-size: 1.063em;
+  }
+  .main-application header .custom-menu ul {
+    margin-right: auto;
+  }
+  .main-application header .custom-menu {
+    padding: inherit;
+  }
+  .main-application header .leftbar-toolbar {
+    padding: 1em 1.5em;
+  }
+  .main-application .main-body .whitebox {
+    padding: 0.9em 1.2em;
+  }
+  .main-application .main-body .sales-details .sales-details-box h6 {
+    font-size: 1em;
+  }
+  .main-application .main-body .sales-details .sales-details-box h5 {
+    font-size: 1.625em;
+  }
+  .main-application .main-body .sales-details .sales-details-box p {
+    font-size: 0.78em;
+  }
+  .main-application .main-body .sales-details .sales-details-box {
+    background-size: auto !important;
+    padding: 0.7em 0.8em;
+  }
+  .main-application .main-body .inventory-details .inventory-details-box h5 {
+    font-size: 1.625em;
+  }
+  .main-application .main-body .inventory-details .inventory-details-box {
+    padding: 0.7em 0.8em;
+    background-size: auto !important;
+  }
+  .main-application .main-body .inventory-details .inventory-details-box h6 {
+    font-size: 1em;
+  }
+
+  .order-section .nav-tabs .nav-item a {
+    font-size: 100%;
+  }
+  .chats-list li .date {
+    position: absolute;
+    right: 10px;
+    bottom: auto;
+  }
+  .profile-header .group-profile .profile {
+    max-width: 42%;
+  }
+}
+
+@media (max-width: 980px) {
+  .login-screen {
+    padding: 5.7em 0 1em;
+  }
+  .login-screen .form {
+    width: 85%;
+  }
+  .login-screen .signup-buttons {
+    width: 85%;
+  }
+  .signup-form {
+    width: 85%;
+  }
+  .login-screen h1 {
+    font-size: 3em;
+  }
+  .login-screen h4 {
+    font-size: 1.1em;
+  }
+  .login-screen .signup-buttons a {
+    margin-bottom: 0.5em;
+  }
+  .mtop-5 {
+    margin-top: 2em !important;
+  }
+  .mtop-4 {
+    margin-top: 1em !important;
+  }
+  .signup-proceed-icon .bi {
+    font-size: 4em;
+  }
+  .login-screen .signup-buttons a {
+    font-size: 1.3em;
+  }
+  .signup-form .terms-condition label,
+  .signup-form .submission h6 {
+    font-size: 1em;
+  }
+  .main-application header {
+    float: none;
+    width: 100%;
+  }
+  .main-application header .leftbar-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding: 0.3em 1.3em;
+  }
+  .main-application .main-body {
+    width: 100%;
+    float: none;
+  }
+  .main-application .main-body .section_title h2 {
+    text-align: center;
+  }
+  .main-application .main-body .header-right-area {
+    padding: 0.2em 2.2em;
+  }
+  .main-application .main-body .whitebox {
+    margin-bottom: 2em;
+  }
+  .main-application .main-body .sales-details .sales-details-box {
+    padding: 0.7em 0.6em;
+    background-position: 96% center !important;
+  }
+  .main-application .main-body .sales-details .sales-details-box h5 {
+    font-size: 1.525em;
+  }
+  .main-application .main-body .sales-details .sales-details-box h6 {
+    font-size: 0.8em;
+  }
+  .main-application .main-body .sales-details .sales-details-box p {
+    font-size: 0.9em;
+  }
+  .navbar-collapse {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    background: #205130;
+    z-index: 999;
+    top: 12%;
+  }
+  .navbar-toggler {
+    background: #205130 !important;
+    outline: 1px solid #49b848;
+  }
+  .navbar-toggler .bi {
+    color: #fff !important;
+    font-size: 1.4em;
+  }
+  .main-application header .custom-menu ul {
+    padding: 0 0em;
+    margin-top: 0em !important;
+  }
+  .main-application header .custom-menu ul li {
+    border-bottom: 1px solid #fff;
+    padding: 1.3em 2em;
+    margin-bottom: 0;
+  }
+  .main-application header .custom-menu ul li:last-child {
+    border-bottom: 0px;
+  }
+  .main-application header .custom-menu {
+    position: static;
+  }
+  .main-application header .custom-menu ul li i,
+  .main-application header .custom-menu ul li a {
+    color: #fff;
+  }
+  .main-application
+    .main-body
+    .sales-purchase-stats
+    .sales-purchase-stats-symbol
+    h6 {
+    font-size: 0.9em;
+  }
+  .main-application .main-body .profile-header .picture-upload {
+    margin: 0 auto 1.5em;
+  }
+  .main-application .main-body .profile-header .profile-name h3 {
+    font-size: 1.275em;
+  }
+  .main-application .main-body .profile-header .profile-name p {
+    font-size: 0.85em;
+  }
+  .main-application
+    .main-body
+    .profile-header
+    .picture-upload
+    span.camera-icon {
+    bottom: -0.4em;
+  }
+  .main-application .main-body .profile-customization-table {
+    padding: 1em 1em;
+  }
+  table th {
+    font-size: 0.8em !important;
+  }
+  table td {
+    font-size: 0.9em !important;
+  }
+  .main-application .main-body .whitebox h3 {
+    font-size: 1.138em;
+  }
+  .all-customization-popups .modal .modal-body {
+    padding: 4em 1em 1em;
+  }
+  .all-customization-popups #feedback-popup .chat-end {
+    padding: 0 2em;
+  }
+  .all-customization-popups .modal .modal-body form#profile-timing-phone label {
+    text-align: left;
+  }
+
+  /** Orders **/
+
+  .order-section .nav-tabs {
+    display: flex;
+    column-gap: 3px;
+  }
+  .order-section .nav-tabs .nav-item a {
+    padding: 0.75em 0.6em;
+  }
+  .order-section .nav-tabs .nav-item a {
+    font-size: 0.9em;
+  }
+  .order-section .nav-tabs .nav-item a {
+    border-radius: 5px;
+    margin: 0 0 0.3em 0;
+  }
+  .order-section .tab-content,
+  .order-section .content {
+    border-radius: 0;
+  }
+  .order-section .order-search-bar {
+    padding: 0;
+  }
+  .main-application .main-body .order-search-bar form i {
+    left: 15px;
+  }
+
+  /*chat*/
+  .chat-search-bar form {
+    padding: 0 25px;
+  }
+  .chat-window .send-msg-box {
+    padding: 0em;
+  }
+  .chat-window .profile-header button {
+    font-size: 0.9em;
+    margin: 1em auto;
+    padding: 0.5em 1em;
+    width: 100%;
+  }
+
+  .grp-chats-list.chats-list li .date {
+    position: absolute;
+    right: 5%;
+  }
+  .profile-header .group-profile .profile {
+    max-width: 100%;
+  }
+  .chats-list li .user-details {
+    display: inline-block;
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-section .nav-tabs {
+    display: block;
+  }
+  /* .profile-btn {
+    font-size: smaller;
+  } */
+  .add-inventory {
+    margin-left: 0.4rem !important;
+    margin-right: 0.4rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-window .profile-header {
+    font-size: 0.9em;
+  }
+  .chat-window .profile-header .profile-img {
+    width: 25%;
+  }
+  .chat-window .profile-header .profile-img img {
+    width: 100%;
+  }
+  .chat-window .profile-header button {
+    width: 100%;
+  }
+
+  .profile-header .profile-imgs img {
+    width: 60px;
+  }
+}

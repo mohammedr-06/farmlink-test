@@ -1,0 +1,55 @@
+        <h1>Welcome Farmer & Butcher</h1>
+        <h4 class="mtop-1">Login to Continue</h4>
+        
+            <div class="form mt-2">
+                <form [formGroup]="loginForm" >
+                   <div class="row">
+                        <div class="col-md-6 col-sm-6 col-lg-12 field">
+                          <input  formControlName="email" placeholder="Email*">
+                                    
+                        <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)" class="error">
+                            <div *ngIf="loginForm.controls['email'].errors.required">
+                            Email is required.
+                        </div>
+                        <div *ngIf="loginForm.get('email').hasError('pattern')">
+                            Please enter proper email address
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-lg-12 field">
+                            <input  formControlName="password"  placeholder="Password*" [type]="passwordEyeHide ? 'password' : 'text'">
+                              <i class="icon2" [ngClass]="passwordEyeHide ? 'bi bi-eye' : 'bi bi-eye-slash'" (click)="myPassword()"></i> 
+                            <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)" class="error">
+                                <div *ngIf="loginForm.controls['password'].errors.required">
+                                   Password is required.
+                            </div>
+                            </div>
+                         
+                        </div>
+                          <div class="col-md-6 col-sm-6 col-lg-12 field">
+                            <input type="checkbox"  formControlName="rememeber_me"  style="float: left; width: 20px;"/>
+                            <label for="rememberMeCheckbox" style="float: left;padding-left: 10px;margin-top: -7px;">Remember Me</label>
+                          </div>
+                        <div class="col-md-12 field mt-3">
+                            <button class="submit-btn border-0 col-md-12" (click)="signInClick(loginForm)" [disabled]="!loginForm.valid">log in</button>
+                        </div>
+                        <div class="col-md-12 field mb-3">
+                            <span class="lightgreen-underline"><a (click)="forgotPasswordClick()" class="hand">Forgot Password?</a></span>
+
+                        </div>
+
+                        <div class="col-md-12 terms-condition-text">
+                            <p>By continuing, you agree to Farm Fresh Link <span class="darkgreen-underline hand" (click)="termsClick()">Terms & Conditions</span> and <span class="darkgreen-underline hand"><a target="_blank" href="https://www.farmfreshlink.com/privacy-policy/">Privacy Policy</a></span></p>
+                        </div>
+
+                         <div class="col-md-12 account-text mt-1">
+                            <p><b>Don't have an account? <span class="lightgreen-underline"><a (click)="signUpClick()" class="hand">Sign up</a></span></b></p>
+                            <br/><br/>
+                        </div>
+                    </div>
+                </form>
+             </div>
+        
+
+
+
